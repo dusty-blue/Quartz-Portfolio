@@ -9,6 +9,7 @@ import { visit } from "unist-util-visit"
 import { Root, Element, ElementContent } from "hast"
 import { GlobalConfiguration } from "../cfg"
 import { i18n } from "../i18n"
+import Landing from "./Landing"
 
 interface RenderComponents {
   head: QuartzComponent
@@ -229,12 +230,15 @@ export function renderPage(
       ))}
     </div>
   )
+  const LandingComponent = Landing()
 
   const lang = componentData.fileData.frontmatter?.lang ?? cfg.locale?.split("-")[0] ?? "en"
   const doc = (
     <html lang={lang}>
       <Head {...componentData} />
       <body data-slug={slug}>
+        {slug === "index" && <LandingComponent {...componentData}/>}
+        { slug !== "index" && (
         <div id="quartz-root" class="page">
           <Body {...componentData}>
             {LeftComponent}
@@ -263,6 +267,7 @@ export function renderPage(
             <Footer {...componentData} />
           </Body>
         </div>
+)}
       </body>
       {pageResources.js
         .filter((resource) => resource.loadTime === "afterDOMReady")
