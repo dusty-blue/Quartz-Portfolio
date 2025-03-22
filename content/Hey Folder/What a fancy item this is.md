@@ -1,1 +1,2 @@
-super fance [[index|index]]
+super fancy [[index|index]]
+super new and super cool content
